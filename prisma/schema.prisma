@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String           @id @default(uuid())
+  email         String           @unique
+  password      String?
+  name          String?
+  createdAt     DateTime         @default(now()) @map("created_at")
+  updatedAt     DateTime         @updatedAt @map("updated_at")
+  bookmarks     Bookmark[]
+  preferences   UserPreferences?
+
+  @@map("users")
+}
+
+model Bookmark {
+  id            String   @id @default(uuid())
+  userId        String   @map("user_id")
+  title         String
+  url           String
+  memo          String?
+  tags          String[]
+  faviconUrl    String?  @map("favicon_url")
+  previewImage  String?  @map("preview_image")
+  isFavorite    Boolean  @default(false) @map("is_favorite")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  lastVisited   DateTime? @map("last_visited")
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("bookmarks")
+}
+
+model UserPreferences {
+  id          String  @id @default(uuid())
+  userId      String  @unique @map("user_id")
+  theme       String  @default("system")
+  viewMode    String  @default("grid") @map("view_mode")
+  defaultSort String  @default("recent") @map("default_sort")
+  tagsExpanded Boolean @default(true) @map("tags_expanded")
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_preferences")
+}
