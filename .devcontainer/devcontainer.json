@@ -1,0 +1,24 @@
+{
+    "name": "Next.js + Supabase DevContainer",
+    "build": {
+        "dockerfile": "../Dockerfile"
+    },
+    "forwardPorts": [3000],
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.eslint": "always"
+                },
+                "editor.formatOnSave": false
+            },
+            "extensions": [
+                "bradlc.vscode-tailwindcss",
+                "esbenp.prettier-vscode",
+                "dbaeumer.vscode-eslint",
+                "ms-vscode.vscode-typescript-next"
+            ]
+        }
+    },
+    "postCreateCommand": "pnpm install"
+}
