@@ -170,3 +170,41 @@
 *::-webkit-scrollbar-thumb:hover {
   @apply bg-muted-foreground/50;
 }
+
+/* Background gradient animation */
+@keyframes background-gradient {
+  0% {
+    transform: translate(
+      calc(var(--tx-1, 0) * 0%),
+      calc(var(--ty-1, 0) * 0%)
+    );
+  }
+  25% {
+    transform: translate(
+      calc(var(--tx-2, 0) * 100%),
+      calc(var(--ty-2, 0) * 100%)
+    );
+  }
+  50% {
+    transform: translate(
+      calc(var(--tx-3, 0) * 100%),
+      calc(var(--ty-3, 0) * 100%)
+    );
+  }
+  75% {
+    transform: translate(
+      calc(var(--tx-4, 0) * 100%),
+      calc(var(--ty-4, 0) * 100%)
+    );
+  }
+  100% {
+    transform: translate(
+      calc(var(--tx-1, 0) * 0%),
+      calc(var(--ty-1, 0) * 0%)
+    );
+  }
+}
+
+.animate-background-gradient {
+  animation: background-gradient var(--background-gradient-speed, 20s) ease-in-out infinite;
+}

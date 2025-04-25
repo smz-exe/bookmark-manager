@@ -1,16 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Layout } from '@/components/layout/Layout';
 import { BookmarkList } from '@/components/bookmark/BookmarkList';
 import { BookmarkForm } from '@/components/bookmark/BookmarkForm';
 import { Button } from '@/components/ui/button';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, Star, Link2, Tag as TagIcon, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Bookmark, supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/providers/auth-provider';
 import { redirect } from 'next/navigation';
+import { StatCard } from '@/components/ui/stat-card';
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
   const { user, isLoading: authLoading } = useAuth();
@@ -38,6 +40,33 @@ export default function Dashboard() {
     },
     enabled: !!user,
   });
+
+  // Stats calculations
+  const stats = useMemo(() => {
+    if (!bookmarks.length)
+      return {
+        total: 0,
+        favorites: 0,
+        tags: 0,
+        recent: 0,
+      };
+
+    // Get unique tags from all bookmarks
+    const uniqueTags = new Set<string>();
+    bookmarks.forEach((bookmark) => {
+      bookmark.tags.forEach((tag) => uniqueTags.add(tag));
+    });
+
+    const now = new Date();
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+
+    return {
+      total: bookmarks.length,
+      favorites: bookmarks.filter((b) => b.is_favorite).length,
+      tags: uniqueTags.size,
+      recent: bookmarks.filter((b) => new Date(b.created_at) > oneWeekAgo).length,
+    };
+  }, [bookmarks]);
 
   // Add bookmark mutation
   const addBookmarkMutation = useMutation({
@@ -167,36 +196,102 @@ export default function Dashboard() {
   return (
     <Layout>
       <div className="flex flex-col space-y-6">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h1 className="text-3xl font-bold">My Bookmarks</h1>
-          <div className="flex gap-4 w-full sm:w-auto">
-            <div className="relative w-full sm:w-64">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search bookmarks..."
-                className="pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-            <Button onClick={() => setIsFormOpen(true)}>
-              <Plus className="mr-2 h-4 w-4" /> Add Bookmark
-            </Button>
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col gap-2"
+        >
+          <h1 className="text-3xl font-bold">Dashboard</h1>
+          <p className="text-muted-foreground">Manage your bookmarks and discover new content</p>
+        </motion.div>
+
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <StatCard
+            title="Total Bookmarks"
+            value={stats.total}
+            subtitle="All your saved links"
+            icon={<Link2 className="h-4 w-4" />}
+            colors={['#3B82F6', '#60A5FA', '#93C5FD']}
+            delay={0.1}
+          />
+          <StatCard
+            title="Favorite Links"
+            value={stats.favorites}
+            subtitle="Your starred content"
+            icon={<Star className="h-4 w-4" />}
+            colors={['#F59E0B', '#FBBF24', '#FCD34D']}
+            delay={0.2}
+          />
+          <StatCard
+            title="Unique Tags"
+            value={stats.tags}
+            subtitle="Categories you've created"
+            icon={<TagIcon className="h-4 w-4" />}
+            colors={['#10B981', '#34D399', '#6EE7B7']}
+            delay={0.3}
+          />
+          <StatCard
+            title="Recent Additions"
+            value={stats.recent}
+            subtitle="Added in the last 7 days"
+            icon={<Clock className="h-4 w-4" />}
+            colors={['#8B5CF6', '#A78BFA', '#C4B5FD']}
+            delay={0.4}
+          />
         </div>
 
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-pulse">Loading bookmarks...</div>
+        {/* Search and Actions */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-card p-4 rounded-lg border"
+        >
+          <div className="relative w-full sm:w-64 sm:max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search bookmarks..."
+              className="pl-9 bg-background"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-        ) : (
-          <BookmarkList
-            bookmarks={filteredBookmarks}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onToggleFavorite={handleToggleFavorite}
-          />
-        )}
+          <Button className="w-full sm:w-auto" onClick={() => setIsFormOpen(true)}>
+            <Plus className="mr-2 h-4 w-4" /> Add Bookmark
+          </Button>
+        </motion.div>
+
+        {/* Bookmark List */}
+        <div className="bg-card rounded-lg border p-4">
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-pulse">Loading bookmarks...</div>
+            </div>
+          ) : filteredBookmarks.length > 0 ? (
+            <BookmarkList
+              bookmarks={filteredBookmarks}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          ) : searchQuery ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <p className="text-muted-foreground mb-2">No bookmarks match your search</p>
+              <p className="text-sm text-muted-foreground">
+                Try a different search term or clear the search
+              </p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 text-center">
+              <p className="text-muted-foreground mb-2">You don&apos;t have any bookmarks yet</p>
+              <Button variant="outline" onClick={() => setIsFormOpen(true)} className="mt-4">
+                <Plus className="mr-2 h-4 w-4" /> Add your first bookmark
+              </Button>
+            </div>
+          )}
+        </div>
 
         <BookmarkForm
           isOpen={isFormOpen}
