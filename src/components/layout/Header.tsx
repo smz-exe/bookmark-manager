@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { AnimatedGradient } from '@/components/ui/animated-gradient';
+import { DecorativePath } from '@/components/ui/decorative-path';
 import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { useState, useEffect } from 'react';
@@ -43,12 +44,21 @@ export function Header() {
     : darkThemeColors;
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-md">
+    <header className="relative z-40 w-full border-b bg-background/80 backdrop-blur-md">
       <div className="relative w-full overflow-hidden">
-        {/* Subtle animated gradient in the background */}
+        {/* Sophisticated background with multiple layers */}
         <div className="absolute inset-0 opacity-40">
           <AnimatedGradient colors={gradientColors} speed={0.04} blur="medium" />
         </div>
+
+        {/* Decorative path backgrounds */}
+        <DecorativePath
+          variant={currentTheme === 'dark' ? 'secondary' : 'primary'}
+          className="opacity-60"
+        />
+
+        {/* Glass-effect overlay */}
+        <div className="absolute inset-0 bg-background/20 backdrop-blur-[2px]"></div>
 
         {/* Header content */}
         <motion.div
@@ -58,19 +68,34 @@ export function Header() {
           transition={{ duration: 0.4 }}
         >
           <div className="flex h-16 items-center justify-between py-4">
-            {/* Logo section with animation */}
-            <motion.div whileHover={{ scale: 1.03 }} transition={{ duration: 0.2 }}>
+            {/* Logo section with enhanced animation */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{
+                type: 'spring',
+                stiffness: 400,
+                damping: 17,
+              }}
+            >
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="rounded-lg bg-primary/10 p-1.5 text-primary ring-1 ring-primary/20 group-hover:ring-primary/30 transition-all duration-300">
+                <div className="rounded-lg bg-primary/10 p-2 text-primary ring-1 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
                   <BookmarkIcon className="h-5 w-5" />
                 </div>
                 <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
-                  Bookmark Manager
+                  <span className="relative">
+                    Bookmark Manager
+                    <motion.span
+                      className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-primary/50 via-secondary/50 to-transparent"
+                      initial={{ width: '0%' }}
+                      whileInView={{ width: '100%' }}
+                      transition={{ duration: 0.8, ease: 'easeOut' }}
+                    />
+                  </span>
                 </span>
               </Link>
             </motion.div>
 
-            {/* Search bar - shown conditionally */}
+            {/* Search bar - shown conditionally with enhanced animation */}
             {showSearch && (
               <motion.div
                 className="hidden md:flex flex-1 px-6 max-w-md mx-4"
@@ -79,18 +104,18 @@ export function Header() {
                 exit={{ opacity: 0, width: 0 }}
               >
                 <div className="relative w-full">
-                  <Search className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Search bookmarks..."
-                    className="pl-8 bg-background/60 border-primary/20 focus:border-primary/50"
+                    className="pl-10 pr-4 py-2 bg-background/60 border-primary/20 focus:border-primary/50 rounded-full shadow-sm focus:shadow-primary/10"
                     autoFocus
                   />
                 </div>
               </motion.div>
             )}
 
-            {/* Action buttons */}
-            <div className="flex items-center gap-1 md:gap-2">
+            {/* Action buttons with improved styling */}
+            <div className="flex items-center gap-2 md:gap-3">
               {user && (
                 <Button
                   variant="ghost"
@@ -131,7 +156,7 @@ export function Header() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="rounded-full border-primary/20 hover:border-primary/50 px-3"
+                      className="rounded-full border-primary/20 hover:border-primary/50 px-3 shadow-sm hover:shadow-md hover:shadow-primary/5 transition-all"
                     >
                       <User className="h-4 w-4 mr-2 text-primary" />
                       <span className="text-sm font-medium">Account</span>
@@ -154,7 +179,7 @@ export function Header() {
               ) : (
                 <Button
                   asChild
-                  className="rounded-full shadow-md hover:shadow-lg transition-all"
+                  className="rounded-full shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-primary to-secondary hover:opacity-90"
                   size="sm"
                 >
                   <Link href="/login">Sign in</Link>

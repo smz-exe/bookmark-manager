@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { BackgroundPaths } from '@/components/ui/background-paths';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="container mx-auto flex items-center justify-between p-4 md:p-6">
+      <header className="container mx-auto flex items-center justify-between p-4 md:p-6 absolute inset-x-0 top-0 z-50">
         <div className="flex items-center gap-2">
           <span className="font-bold text-xl md:text-2xl">Bookmark Manager</span>
         </div>
@@ -20,29 +21,55 @@ export default function Home() {
       </header>
 
       <main className="flex-1">
-        <section className="py-12 md:py-24 lg:py-32">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="flex flex-col items-center text-center space-y-4 md:space-y-8">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                  Organize your web, <span className="text-primary">effortlessly</span>
-                </h1>
-                <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                  Save, organize, and revisit your favorite websites with our elegant and powerful
-                  bookmark management solution.
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row items-center gap-4">
-                <Button asChild size="lg">
-                  <Link href="/signup">Start for free</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline">
-                  <Link href="#features">Learn more</Link>
-                </Button>
+        <BackgroundPaths title="Bookmark Manager" className="min-h-screen">
+          <section className="flex items-center justify-center w-full py-16 md:py-20 lg:py-24">
+            <div className="container mx-auto px-4 md:px-6">
+              <div className="flex flex-col items-center text-center space-y-6 md:space-y-8">
+                <div className="space-y-4">
+                  <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
+                    Organize your web, <span className="text-primary">effortlessly</span>
+                  </h1>
+                  <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
+                    Save, organize, and revisit your favorite websites with our elegant and powerful
+                    bookmark management solution.
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                  <div
+                    className="inline-block group relative bg-gradient-to-b from-black/10 to-white/10 
+                        dark:from-white/10 dark:to-black/10 p-px rounded-2xl backdrop-blur-lg 
+                        overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+                  >
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="rounded-[1.15rem] px-8 py-6 text-lg font-semibold backdrop-blur-md 
+                            bg-white/95 hover:bg-white/100 dark:bg-black/95 dark:hover:bg-black/100 
+                            text-black dark:text-white transition-all duration-300 
+                            group-hover:-translate-y-0.5 border border-black/10 dark:border-white/10
+                            hover:shadow-md dark:hover:shadow-neutral-800/50"
+                    >
+                      <Link href="/signup">
+                        <span className="opacity-90 group-hover:opacity-100 transition-opacity">
+                          Start for free
+                        </span>
+                        <span
+                          className="ml-3 opacity-70 group-hover:opacity-100 group-hover:translate-x-1.5 
+                                transition-all duration-300"
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </Button>
+                  </div>
+                  <Button asChild size="lg" variant="outline">
+                    <Link href="#features">Learn more</Link>
+                  </Button>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </BackgroundPaths>
 
         <section className="py-12 md:py-24 bg-muted/50" id="features">
           <div className="container mx-auto px-4 md:px-6">
