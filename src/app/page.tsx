@@ -1,14 +1,59 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BackgroundPaths } from '@/components/ui/background-paths';
+import { useAuth } from '@/components/providers/auth-provider';
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  // Redirect authenticated users to dashboard
+  useEffect(() => {
+    if (user && !isLoading) {
+      router.push('/dashboard');
+    }
+  }, [user, isLoading, router]);
+
+  // If still loading auth state, show minimal loading state
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-pulse text-primary font-medium">Loading...</div>
+      </div>
+    );
+  }
+
+  // Only render landing page content for non-authenticated users
   return (
     <div className="flex flex-col min-h-screen">
       <header className="container mx-auto flex items-center justify-between p-4 md:p-6 absolute inset-x-0 top-0 z-50">
         <div className="flex items-center gap-2">
-          <span className="font-bold text-xl md:text-2xl">Bookmark Manager</span>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{
+              type: 'spring',
+              stiffness: 400,
+              damping: 17,
+            }}
+          >
+            <span className="text-xl font-bold tracking-tight text-black dark:text-white">
+              <span className="relative">
+                Bookmark Manager
+                <motion.span
+                  className="absolute -bottom-1 left-0 h-[2px] w-full bg-gradient-to-r from-black/50 dark:from-white/50 via-black/30 dark:via-white/30 to-transparent"
+                  initial={{ scaleX: 0, originX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
+                />
+              </span>
+            </span>
+          </motion.div>
         </div>
         <div className="flex items-center gap-4">
           <Button asChild variant="outline">

@@ -4,7 +4,7 @@ import { useAuth } from '@/components/providers/auth-provider';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
-import { BookmarkIcon, Moon, Sun, User, Search } from 'lucide-react';
+import { Moon, Sun, User, Search } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,9 +78,6 @@ export function Header() {
               }}
             >
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="rounded-lg bg-black/5 p-2 text-black dark:text-white ring-1 ring-black/10 dark:ring-white/10 group-hover:ring-black/30 dark:group-hover:ring-white/30 transition-all duration-300 shadow-sm group-hover:shadow-black/10 dark:group-hover:shadow-white/10">
-                  <BookmarkIcon className="h-5 w-5 stroke-[1.5px]" />
-                </div>
                 <span className="text-xl font-bold tracking-tight text-black dark:text-white">
                   <span className="relative">
                     Bookmark Manager
