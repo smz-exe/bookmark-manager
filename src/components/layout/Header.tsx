@@ -78,14 +78,14 @@ export function Header() {
               }}
             >
               <Link href="/" className="flex items-center space-x-2 group">
-                <div className="rounded-lg bg-primary/10 p-2 text-primary ring-1 ring-primary/20 group-hover:ring-primary/40 transition-all duration-300 shadow-sm group-hover:shadow-primary/20">
-                  <BookmarkIcon className="h-5 w-5" />
+                <div className="rounded-lg bg-black/5 p-2 text-black dark:text-white ring-1 ring-black/10 dark:ring-white/10 group-hover:ring-black/30 dark:group-hover:ring-white/30 transition-all duration-300 shadow-sm group-hover:shadow-black/10 dark:group-hover:shadow-white/10">
+                  <BookmarkIcon className="h-5 w-5 stroke-[1.5px]" />
                 </div>
-                <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">
+                <span className="text-xl font-bold tracking-tight text-black dark:text-white">
                   <span className="relative">
                     Bookmark Manager
                     <motion.span
-                      className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-primary/50 via-secondary/50 to-transparent"
+                      className="absolute -bottom-1 left-0 h-[2px] bg-gradient-to-r from-black/50 dark:from-white/50 via-black/30 dark:via-white/30 to-transparent"
                       initial={{ width: '0%' }}
                       whileInView={{ width: '100%' }}
                       transition={{ duration: 0.8, ease: 'easeOut' }}
