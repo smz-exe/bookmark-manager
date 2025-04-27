@@ -2,7 +2,13 @@
 
 ## General Code Style & Formatting
 
-- Follow the Airbnb Style Guide for code formatting.
+- Use 2 spaces for indentation.
+- Prefer single quotes for strings.
+- Always include trailing commas where valid in ES5 (e.g., in objects and arrays).
+- Prefer const declarations; use let only when necessary and avoid var.
+- Destructure objects and arrays where possible.
+- Use PascalCase for React component file names (e.g., UserCard.tsx).
+- Prefer named exports for React components and utilities.
 - Use ES modules (import/export) syntax, not CommonJS (require)
 - Destructure imports when possible (eg. import { foo } from 'bar')
 - Use PascalCase for React component file names (e.g., UserCard.tsx, not user-card.tsx).
