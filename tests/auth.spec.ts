@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { TEST_CONFIG } from './test-config';
 
 test.describe('Authentication', () => {
   test('login page displays correctly', async ({ page }) => {
     // Navigate to the login page with full URL
-    await page.goto('http://localhost:3001/login');
+    await page.goto(`${TEST_CONFIG.baseUrl}/login`);
 
     // Take screenshot of current page for debugging
     await page.screenshot({ path: 'test-results/login-page.png' });
@@ -32,7 +33,7 @@ test.describe('Authentication', () => {
 
   test('signup page displays correctly', async ({ page }) => {
     // Navigate to the signup page with full URL
-    await page.goto('http://localhost:3001/signup');
+    await page.goto(`${TEST_CONFIG.baseUrl}/signup`);
 
     // Take screenshot of current page for debugging
     await page.screenshot({ path: 'test-results/signup-page.png' });

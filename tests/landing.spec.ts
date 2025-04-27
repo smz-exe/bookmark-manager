@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { TEST_CONFIG } from './test-config';
 
 test.describe('Landing Page', () => {
   test('landing page loads correctly', async ({ page }) => {
     // Navigate to the homepage with full URL
-    await page.goto('http://localhost:3001/');
+    await page.goto(`${TEST_CONFIG.baseUrl}/`);
 
     // Check if the page has loaded by verifying some content
     await expect(page).toHaveTitle(/Bookmark Manager/);
@@ -17,7 +18,7 @@ test.describe('Landing Page', () => {
 
   test('navigation works correctly', async ({ page }) => {
     // Navigate to the homepage with full URL
-    await page.goto('http://localhost:3001/');
+    await page.goto(`${TEST_CONFIG.baseUrl}/`);
 
     // Click on login button if it exists
     const loginButton = page.getByRole('link', { name: /login/i });
@@ -28,7 +29,7 @@ test.describe('Landing Page', () => {
       await expect(page.url()).toContain('/login');
 
       // Go back to home
-      await page.goto('http://localhost:3001/');
+      await page.goto(`${TEST_CONFIG.baseUrl}/`);
     }
 
     // Check signup navigation if it exists

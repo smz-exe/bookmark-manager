@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
+import { TEST_CONFIG } from './test-config';
 
 test.describe('Dashboard', () => {
   // We'll skip the auth part for now and directly test the dashboard page
   // This is a simpler approach until we have working auth
   test('dashboard page structure', async ({ page }) => {
     // Navigate directly to dashboard page with full URL
-    await page.goto('http://localhost:3001/dashboard');
+    await page.goto(`${TEST_CONFIG.baseUrl}/dashboard`);
 
     // Take screenshot for debugging
     await page.screenshot({ path: 'test-results/dashboard-page.png' });
@@ -23,7 +24,7 @@ test.describe('Dashboard', () => {
 
   test('dashboard elements', async ({ page }) => {
     // Navigate directly to dashboard page with full URL
-    await page.goto('http://localhost:3001/dashboard');
+    await page.goto(`${TEST_CONFIG.baseUrl}/dashboard`);
 
     // Check for buttons - this is more flexible
     const buttons = page.getByRole('button');
