@@ -39,23 +39,27 @@ A modern, elegant bookmark management application built with Next.js, Supabase, 
 ### Local Development
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/yourusername/bookmark-manager.git
 cd bookmark-manager
 ```
 
 2. Install dependencies
+
 ```bash
 pnpm install
 ```
 
 3. Create an `.env.local` file at the root of your project with the following:
+
 ```
 NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
 4. Start the development server
+
 ```bash
 pnpm dev
 ```
