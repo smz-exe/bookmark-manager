@@ -1,4 +1,4 @@
-📚 Bookmark Manager - Requirements Document
+# 📚 Bookmark Manager - Requirements Document
 
 1. 🎯 Purpose
 
@@ -7,7 +7,7 @@ The app will allow users to save, manage, and organize web bookmarks with titles
 
 ⸻
 
-2. 👤 User Features
+1. 👤 User Features
 
 Feature Description
 Sign Up / Log In Users can register and authenticate via Supabase Auth.
@@ -21,7 +21,7 @@ Responsive UI Fully responsive layout for mobile, tablet, and desktop.
 
 ⸻
 
-3. 🗃️ Database Design (Supabase)
+1. 🗃️ Database Design (Supabase)
 
 Table: bookmarks
 
@@ -37,7 +37,7 @@ updated_at Timestamp Last updated timestamp
 
 ⸻
 
-4. 🛠️ Tech Stack
+1. 🛠️ Tech Stack
 
 Category Technology
 Frontend Framework Next.js (App Router, TypeScript)
@@ -48,7 +48,7 @@ Optional Enhancement Supabase Storage (for favicon/thumbnail uploads)
 
 ⸻
 
-5. 🚀 Development Plan
+1. 🚀 Development Plan
 
 Step Details
 
@@ -62,7 +62,7 @@ Step Details
 
 ⸻
 
-6. ✨ Key Goals
+1. ✨ Key Goals
  • Modern UI/UX: A clean, luxurious, visually appealing interface.
  • Speed: Fast loading and real-time responsiveness.
  • Scalability: Easy to extend with features like favorites, folders, sharing.
