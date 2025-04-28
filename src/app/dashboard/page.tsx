@@ -26,7 +26,7 @@ export default function Dashboard() {
   // Use useEffect for client-side navigation instead of server redirect
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push('/login');
+      router.push('/');
     }
   }, [user, authLoading, router]);
 

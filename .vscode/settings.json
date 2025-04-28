@@ -1,4 +1,13 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "chat.agent.enabled": true,
   "github.copilot.chat.codeGeneration.useInstructionFiles": true,
   "chat.agent.maxRequests": 40,
   "github.copilot.enable": {
