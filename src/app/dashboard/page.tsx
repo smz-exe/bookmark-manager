@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Layout } from '@/components/layout/Layout';
 import { BookmarkList } from '@/components/bookmark/BookmarkList';
@@ -10,7 +10,7 @@ import { Plus, Search, Star, Link2, Tag as TagIcon, Clock } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Bookmark, supabase } from '@/lib/supabase';
 import { useAuth } from '@/components/providers/auth-provider';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { StatCard } from '@/components/ui/stat-card';
 import { motion } from 'framer-motion';
 
@@ -19,13 +19,16 @@ export default function Dashboard() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingBookmark, setEditingBookmark] = useState<Bookmark | undefined>(undefined);
   const [searchQuery, setSearchQuery] = useState('');
+  const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  // Redirect if not authenticated
-  if (!authLoading && !user) {
-    redirect('/login');
-  }
+  // Use useEffect for client-side navigation instead of server redirect
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, authLoading, router]);
 
   // Fetch bookmarks
   const { data: bookmarks = [], isLoading } = useQuery({
