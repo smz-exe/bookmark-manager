@@ -36,7 +36,7 @@
 
 ## Backend & Database
 
-Use Prisma for database access.
+- Use Prisma for database access.
 
 ## Workflow
 
