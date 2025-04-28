@@ -7,10 +7,6 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "editor.codeActionsOnSave": {
-          "source.fixAll.eslint": "always"
-        },
-        "editor.formatOnSave": false,
         "chat.tools.autoApprove": true // Enable auto-approve for Copilot chat tools
       },
       "extensions": [
@@ -21,5 +17,5 @@
       ]
     }
   },
-  "postCreateCommand": "pnpm install"
+  "postCreateCommand": "pnpm install && pnpm exec playwright install --with-deps"
 }
