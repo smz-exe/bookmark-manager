@@ -6,7 +6,12 @@
   "forwardPorts": [3000],
   "containerEnv": {
     "CI": "true"
-},
+  },
+  "mounts": [
+    "source=playwright-browsers,target=/root/.cache/ms-playwright,type=volume",
+    "source=pnpm-store,target=/root/.pnpm-store,type=volume",
+    "source=npm-cache,target=/root/.npm,type=volume"
+  ],
   "customizations": {
     "vscode": {
       "settings": {
@@ -21,5 +26,5 @@
       ]
     }
   },
-  "postCreateCommand": "pnpm install && pnpm exec playwright install --with-deps"
+  "postCreateCommand": "pnpm config set store-dir /root/.pnpm-store && pnpm install && pnpm exec playwright install --with-deps"
 }
