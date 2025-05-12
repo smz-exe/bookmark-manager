@@ -15,7 +15,9 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "chat.tools.autoApprove": true // Enable auto-approve for Copilot chat tools
+        "chat.tools.autoApprove": true, // Enable auto-approve for Copilot chat tools
+        "remote.restoreForwardedPorts": false,
+        "remote.autoForwardPortsSource": "output"
       },
       "extensions": [
         "bradlc.vscode-tailwindcss",
@@ -26,5 +28,6 @@
       ]
     }
   },
-  "postCreateCommand": "pnpm config set store-dir /root/.pnpm-store && pnpm install && pnpm exec playwright install --with-deps"
+  "postCreateCommand": "bash -c 'pnpm config set store-dir /root/.pnpm-store && pnpm install && (pnpm exec playwright install --with-deps chromium || pnpm exec playwright install chromium || echo \"Playwright browser installation had issues, but continuing...\")'",
+  "postStartCommand": "bash -c 'if pgrep -f \"node.*next\" > /dev/null; then echo \"Cleaning up existing Next.js processes\"; pkill -f \"node.*next\" || true; fi; exit 0'"
 }
